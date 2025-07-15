@@ -1,1 +1,129 @@
+class Administrador:
+    def __init__(self, idAdministrador, nombre):
+        self.__idAdministrador = idAdministrador
+        self.__nombre = nombre
 
+    @property
+    def idAdministrador(self):
+        return self.__idAdministrador
+
+    @property
+    def nombre(self):
+        return self.__nombre
+
+
+class Departamento:
+    def __init__(self, idDepartamento, nroHabitaciones):
+        self.__idDepartamento = idDepartamento
+        self.__nroHabitaciones = nroHabitaciones
+
+    @property
+    def idDepartamento(self):
+        return self.__idDepartamento
+
+    @property
+    def nroHabitaciones(self):
+        return self.__nroHabitaciones
+    
+    def __str__(self):
+        return (f"El departamento {self.__idDepartamento} "
+                f"tiene {self.__nroHabitaciones}")
+    
+
+class Propietario:
+    def __init__(self, idPropietario, nombre):
+        self.__idPropietario = idPropietario
+        self.__nombre = nombre
+
+    @property
+    def idPropietario(self):
+        return self.__idPropietario
+
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+
+class JuntaPropietarios:
+    def __init__(self, idJuntaPropietario, fechaCreacion):
+        self.__idJuntaPropietario = idJuntaPropietario
+        self.__fechaCreacion = fechaCreacion
+        self.__propietarios = {}
+
+    @property
+    def idJuntaPropietario(self):
+        return self.__idJuntaPropietario
+
+    @property
+    def fechaCreacion(self):
+        return self.__fechaCreacion
+    
+    def addPropietario(self, propietario):
+        if isinstance(propietario, Propietario):
+            self.__propietarios[propietario.idPropietario] = propietario
+        else:
+            print("No es de tipo Propietario")
+
+    def printPropietarios(self):
+        print("\nPropietarios: ")
+        for i in self.__propietarios.values():
+            print(f"Propietario: {i.nombre}")
+
+class Edificio:
+    def __init__(self, idEdificio, direccion):
+        self.__idEdificio = idEdificio
+        self.__direccion = direccion
+        self.__departamentos = {}
+        self.__administrador = None
+        self.__juntaPropietario = None
+
+    @property
+    def idEdificio(self):
+        return self.__idEdificio
+
+    @property
+    def direccion(self):
+        return self.__direccion 
+
+    def addAdministrador(self, administrador):
+        if isinstance(administrador, Administrador):
+            self.__administrador = administrador
+        else:
+            print("No es del tipo administrador")
+    
+    def addJunta(self, junta):
+        if isinstance(junta, JuntaPropietarios):
+            self.__juntaPropietario = junta
+        else:
+            print("No es del tipo JuntaPropietarios")
+    
+    def crearDepartamentos(self, idDepartamento, nroHabitaciones):
+            self.__departamentos[idDepartamento] = Departamento(
+                idDepartamento, nroHabitaciones
+                )
+
+    def printDepa(self):
+        for i in self.__departamentos.values():
+            print(i)
+
+    def __str__(self):
+        return(f"Edificio {self.__idEdificio} ubicado en {self.__direccion}")
+
+
+#PP
+admi1 = Administrador("123", "Pancho")
+propietario1 = Propietario("123", "Juanito")
+propietario2 = Propietario("456", "Pedro ")
+propietario3 = Propietario("789", "Asuncion")
+junta = JuntaPropietarios("123", "25-06-2025")
+junta.addPropietario(propietario1)
+junta.addPropietario(propietario2)
+junta.addPropietario(propietario3)
+edificio1 = Edificio("123", "Avenida Nicolas de Pierola")
+edificio1.addAdministrador(admi1)
+edificio1.addJunta(junta)
+edificio1.crearDepartamentos("D1", 3)
+edificio1.crearDepartamentos("D2", 2)
+edificio1.crearDepartamentos("D3", 4)
+print(edificio1)
+edificio1.printDepa()
