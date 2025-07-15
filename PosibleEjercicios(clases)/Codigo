@@ -1,1 +1,88 @@
+class PiezaArqueologica:
+    def __init__(self, idPieza, nombre):
+        self.__idPieza = idPieza
+        self.__nombre = nombre
 
+    @property
+    def idPieza(self):
+        return self.__idPieza
+    
+    @property
+    def nombre(self):
+        return self.__nombre
+
+
+class Museo:
+    def __init__(self, idMuseo, nombre):
+        self.__idMuseo = idMuseo
+        self.__nombre = nombre
+        self.__piezas = {}
+
+    @property
+    def idMuseo(self):
+        return self.__idMuseo
+    
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    def addPieza(self, pieza):
+        if isinstance(pieza, PiezaArqueologica):
+            self.__piezas[pieza.idPieza] = pieza
+        else:
+            print("No es del tipo Pieza Arqueologica")
+    
+    
+class AtributoCultural:
+    def __init__(self, idAtributo, nombre):
+        self.__idAtributo = idAtributo
+        self.__nombre = nombre
+
+    @property
+    def idAtributo(self):
+        return self.__idAtributo
+    
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+
+class Cultura:
+    def __init__(self, idCultura, nombre):
+        self.__idCultura = idCultura
+        self.__nombre = nombre
+        self.__atributos = {}
+    
+    @property
+    def idCultura(self):
+        return self.__idCultura
+    
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+    def crearAtributo(self, idAtributo, nombre):
+        self.__atributos[idAtributo] = AtributoCultural[idAtributo, nombre]
+
+
+class Investigador:
+    def __init__(self, idInvestigador, nombre):
+        self.__idInvestigador = idInvestigador
+        self.__nombre = nombre
+
+    @property
+    def idInvestigador(self):
+        return self.__idInvestigador
+    
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+    def registrarDescubrimiento(self):
+        pass
+        
+
+class Arqueologo(Investigador):
+    def __init__(self, campamentos, idInvestigador, nombre):
+        super().__init__(idInvestigador, nombre)
+        self.__campamentos = campamentos
