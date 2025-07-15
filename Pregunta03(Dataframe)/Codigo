@@ -1,1 +1,58 @@
+import pandas as pd
+import numpy as np
+
+class Data:
+    def __init__(self):
+        self.__data = pd.read_csv("iris.csv", index_col=0)
+        nombres = ["sepallength", "sepalwidth", "petallength", "petalwidth", "species"]
+        self.__data.columns = nombres
+
+    def deleteSpecies(self):
+        species=self.__data.pop("species")
+        print(species)
+
+    def estadisticasSpellength(self):
+        media = round(self.__data["sepallength"].mean(), 4)
+        mediana = self.__data["sepallength"].median()
+        moda = self.__data["sepallength"].mode()
+
+        print(f"La media de la serie sepallength es: {media}")
+        print(f"La mediana de la serie sepallength es: {mediana}")
+        print(f"La moda de la serie sepallength es: {moda}")
+
+    def ingresarNan(self):
+        copiaData = self.__data.copy()
+        tamaño = 30
+        x = np.random.randint(copiaData.shape[0], size = tamaño)
+        y = np.random.randint(copiaData.shape[1], size = tamaño)
+        for i in range(tamaño):
+            copiaData.iloc[x[i], y[i]] = np.nan
+        
+        print(f"Copia Data con Nan\n{copiaData}")
+
+        print(f"Cantidad de Nan en la columna sepalwidth:" 
+              f"{copiaData["sepalwidth"].isnull().sum()}")
+
+        copiaData = copiaData.dropna()
+        print(f"\nCopia sin Nan\n{copiaData}")
+    
+    def filtrar(self):
+        new = ((self.__data["petallength"] > 1.5) & 
+                (self.__data["sepallength"] < 5.0))
+        newData = self.__data.loc[new]
+        print(newData)
+
+    def __str__(self):
+        return(f"{self.__data}")
+    
+
+#PP
+data = Data()
+print(data)
+print()
+data.deleteSpecies()
+print()
+data.estadisticasSpellength()
+data.ingresarNan()
+data.filtrar()
 
