@@ -1,1 +1,43 @@
+import pandas as pd
+import numpy as np
 
+
+class Bupa:
+    def __init__(self):
+        self.__bupa = pd.read_csv("bupa.csv", header=None)
+        columnas = ["mcv", "alkphos", "sgpt", "sgot", "gammagt", "drinks", "selector"]
+        self.__bupa.columns = columnas
+
+    def calcular(self):
+        media = round(self.__bupa["alkphos"].mean(), 4)
+        mediana = self.__bupa["alkphos"].median()
+        moda = self.__bupa["alkphos"].mode()
+
+        print(f"La media de la serie alkphos es: {media}")
+        print(f"La mediana de la serie alkphos es: {mediana}")
+        print(f"La moda de la serie alkphos es: {moda}")
+
+    def colocar_nan(self):
+        bupacopia = self.__bupa.copy()
+        tamaño = 50
+        x = np.random.randint(bupacopia.shape[0], size=tamaño)
+        y = np.random.randint(bupacopia.shape[1], size=tamaño)
+        for i in range(tamaño):
+            bupacopia.iloc[x[i], y[i]] = np.nan
+        
+        print(f"bupaCopia con nan \n{bupacopia.head(50)}")
+
+        print(bupacopia.isnull().sum())
+
+        bupacopia = bupacopia.dropna()
+        print(f"\nCopia sin nan\n{bupacopia.head(50)}\n")
+
+    def __str__(self):
+        return f"{self.__bupa}"
+
+
+#PP
+bupa = Bupa()
+print(bupa)
+bupa.calcular()
+bupa.colocar_nan()
