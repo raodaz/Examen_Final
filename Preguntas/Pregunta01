@@ -10,3 +10,6 @@
 4. Crear una copia de DataFrame y poner 50 NaN de manera aleatoria
 5. Contar cuantos nan hay por columna
 6. Eliminar las filas con NaN
+
+
+
